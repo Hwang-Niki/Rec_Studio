@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Studio</title>
+    <style>
+        html{
+            margin: 0;
+            padding: 0;
+        }
+        
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', Courier, monospace,Times, serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+        h2{
+            margin: 0;
+        }
+        .header{
+            display: flex;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            background-color: #51739b;
+            gap: 40vw;
+        }
+       
+        .sidebar{
+            position: fixed;
+            height: 100%;
+            width: 20vw;
+            background-color:#C8D9E6;
+            left: -20vw; /* Начальное положение скрыто */
+            transition: left 0.3s;
+            display: grid;
+            grid-template-areas: 
+            "hight "
+            "low "
+        }
+        .sidebar.active {
+            left: 0; /* Положение при активации */
+        }
+        .sideMain{
+            display: flex;
+            height: 100%;
+        }
+
+        .hight{
+            grid-area: hight;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .low{
+            grid-area: low;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3em;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            font-size: 2.3vh;
+        }
+
+        .sidebar button {
+            background: none;
+            border: 1px solid #51739b ;
+            padding: 0.5rem;
+            text-align: center;
+            width: 20vw;
+            cursor: pointer;
+            font-size: 2.5vh;
+            font-family: 'Times New Roman';
+        }
+        .sidebar button:hover {
+            background: #51749b71;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            border: none;
+            background: none;
+        }
+        .main{
+            background-color: #F5EFEB;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100%;
+            margin-left: 0; /* Для обширной области */
+            transition: margin-left 0.3s;
+        }
+        .content {
+            display: none; /* Скрываем контент по умолчанию */
+        }
+        .news{
+            border: 3px solid #51739b;
+            border-radius: 10px;
+            padding:8px;
+            background-color: white;
+            height: 80%;
+            width: 35%;
+        }
+
+        .info{
+            border: 3px solid #51739b;
+            border-radius: 10px;
+            width: auto;
+            padding:8px;
+            background-color: white;
+            height: 80%;
+        }
+        .footer{
+            color: white;
+            text-align: center;
+            background-color: #51739b;
+            height: 20%;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="header">
+    <button class="toggle-btn" onclick="toggleMenu()">☰</button>
+<h1>JYP Entertainment</h1>
+</div>
+<div class="sideMain">
+<div class="sidebar" id="sidebar">
+    <div class="hight">
+    <a href="{% url 'home' %}"><button >Главная</button></a>
+    <a href="{% url 'projects' %}"><button>Проекты</button></a>
+    <button>Альбомы</button>
+    <button>Настройки</button>
+</div>
+    <div class="low">
+    <img src="https://sh94-krasnoyarsk-r04.gosweb.gosuslugi.ru/netcat_files/9/148/1663871865_44_top_fon_com_p_serii_fon_tik_tok_foto_50_16.jpg" alt="Аватар" class="avatar">
+    <a href="{% url 'login' %}"> Вход </a>
+    <a href="{% url 'register' %}">Регистрация</a>
+     
+
+</div>
+</div>
+<div class="main" id="main">
+    <div class="content" id="info">
+        <div class="info">Здесь информация о компании.</div>
+    </div>
+    <div class="content" id="news">
+        <div class="news">Здесь новости.</div>
+    </div>
+</div>
+</div>
+<div class="footer">
+    <p>Соц. сети: [Ссылки на соц. сети]</p>
+    <p>Контактная информация: example@studio.com</p>
+    <a href="studio/artist_form"> Исполнители </a>
+    <a href="studio/producer_form.html"> Продюсер </a>
+    <a href="studio/client_form.html"> Клиенты </a>
+    <a href="studio/manager_form.html"> Менеджер </a>
+</div>
+    </div>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            sidebar.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                main.style.marginLeft = '10vw';
+            } else {
+                main.style.marginLeft = '0';
+            }
+        }
+    
+        function showContent(contentId) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.style.display = 'none'); // Скрываем весь контент
+            document.getElementById(contentId).style.display = 'block'; // Показываем выбранный контент
+        }
+        
+        // Изначально показываем информацию о компании
+        showContent('info');
+    </script>
+</body>
+</html>

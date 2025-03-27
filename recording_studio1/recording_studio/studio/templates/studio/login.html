@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Studio</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', Times, serif;
+            height: 100vh;
+            background: radial-gradient(rgb(255, 255, 255),  #1f5694);
+            overflow: hidden;
+            background-image: url(https://news.cgtn.com/news/2021-06-11/Russian-telecom-watchdog-says-two-foreign-radio-stations-ignored-laws-110JhQvGh7G/img/5c740e9bdda94854a4b5f57c34521014/5c740e9bdda94854a4b5f57c34521014-1920.png);
+       
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:auto;
+            flex-direction: column;
+            backdrop-filter: blur(30px);
+            max-width: 50vw;
+            font-size: 2.3vh;
+            padding: 2vw;
+            border: none;
+            border-radius: 20px;
+            margin:10vh;
+            box-shadow: 0 0 10px 10px #c2cfff7e;
+            color: aliceblue;
+        }
+        #loginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 2vh;
+        align-items: center; 
+        margin: 2vw;       
+    }
+        button{
+            width: 25vw;
+            height: 5vh;
+            background-color:  #7d90cfd7;
+            border: none;
+            border-radius: 10px;   
+            margin: 2.5vh; 
+            cursor: pointer;
+        }
+        button:hover{
+            background: linear-gradient(to right, #758cd7d7, #576eb8);
+            border: none;
+            border-radius: 10px; 
+        }
+        input{
+            height: 4vh;
+            width: 50vw;
+        }
+
+        a{
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+        }
+        a:hover{
+            color:#435ea0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Вход</h2>
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+            <div>
+                <label for="username"> Введите логин: </label>
+                <input type="username" name="username" id="username" required>
+            </div>
+            <div>
+                <label for="password">Введите пароль:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit">Войти</button>
+        </form>
+        {% if error_message %}
+            <div class="error">{{ error_message }}</div>
+        {% endif %}
+        <a href="{% url 'register' %}">Нет аккаунта? Зарегистрироваться</a>
+    </div>
+</body>
+</html>

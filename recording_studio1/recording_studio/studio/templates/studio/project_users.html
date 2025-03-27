@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Studio</title>
+    <style>
+        html{
+            margin: 0;
+            padding: 0;
+        }
+        
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', Courier, monospace,Times, serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .container{
+            display: flex;
+           flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .header{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-area: header;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            background-color: #51739b;
+        }
+       
+        .sidebar{
+            height: 100%;
+            width: 20vw;
+            background-color:#C8D9E6;
+            display: grid;
+            grid-template-areas: 
+            "hight "
+            "low "
+        }
+        .sideMain{
+            display: flex;
+            height: 100%;  
+        }
+
+        .hight{
+            grid-area: hight;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .low{
+            grid-area: low;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3em;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            font-size: 2.3vh;
+        }
+
+        .sidebar button {
+            background: none;
+            border: 1px solid #51739b ;
+            padding: 0.5rem;
+            text-align: center;
+            width: 20vw;
+            cursor: pointer;
+            font-size: 2.5vh;
+            font-family: 'Times New Roman';
+        }
+        .sidebar button:hover {
+            background: #51749b71;
+        }
+        h2{
+            margin-top: 0;
+        }
+        .main{
+            background-color: #F5EFEB;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 100%;
+            overflow:auto;
+        }
+
+        .headMain{
+            display: flex;
+            width: 100%;
+            height: auto;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin-left: 2vw;
+        }
+
+        .filter {
+            margin-bottom: 20px;
+            background-color: #C8D9E6;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }  
+
+        .projects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            min-width: 30%;
+            max-width: 40%;
+            margin-bottom: 2vh;
+        }
+        .project-card button{
+            background-color: #88aad0;
+            min-width: 10vw;
+            height: 5vh;
+            border: none;
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+
+        .filterBut{
+            display: flex;
+            flex-direction: column;
+        }
+        .dropdown-btn {
+            padding: 10px;
+            background-color: #C8D9E6;
+            color: rgb(0, 0, 0);
+            border: 2px solid #799bc1;
+            cursor: pointer;
+            width: 8vw;
+            height: 8vh;
+        }
+        .dropdown-btn img{
+            height: 20px;
+            width: 20px;
+        }
+        .dropdown-content {
+            position: absolute;
+            background-color: white;
+            width: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            padding: 10px;
+            border: 2px solid #799bc1;
+        }
+
+        .dropdown-content label, .dropdown-content select, .dropdown-content button {        
+            display: flex;
+            margin: 5px 0;
+            width: 15vw;
+        }
+        .dropdown-content button{
+            background-color: #C8D9E6;
+            border: 2px solid #799bc1;
+        }
+
+        .footer{
+            color: white;
+            text-align: center;
+            background-color: #51739b;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="header">
+<h1>JYP Entertainment</h1>
+</div>
+<div class="sideMain">
+<div class="sidebar">
+    <div class="hight">
+    <a href="artist_form.html"><button >Главная</button></a>
+    <a href="{% url 'project_users' %}"><button>Проекты</button></a>
+    <button>Альбомы</button>
+    <a href="{% url 'notifications_artist' %}"><button>Уведомления</button></a>
+    <button>Настройки</button>
+</div>
+    <div class="low">
+    <img src="https://sh94-krasnoyarsk-r04.gosweb.gosuslugi.ru/netcat_files/9/148/1663871865_44_top_fon_com_p_serii_fon_tik_tok_foto_50_16.jpg" alt="Аватар" class="avatar">
+    <p>{{ user.username }}</p>
+</div>
+</div>
+<div class="main">
+    <div class="headMain">
+        <div class="filterBut">
+        <button class="dropdown-btn" onclick="toggleProducerForm2()"><img src="https://www.dkv33.ru/assets/img/icon/filter.png"></button>
+            <div class="filter">
+                <div class="dropdown-content" id="filter" style="display: none;">
+                    <label for="performers">Исполнители:</label>
+                    <select id="performers" name="performers">
+                        <!-- Здесь будут исполнители -->
+                    </select>
+                    <label for="date">Дата:</label>
+                    <input type="date" id="date" name="date">
+                    <button type="button" onclick="applyFilter()">Применить</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="projects-list">
+        {% if projects %} 
+        {% for project in projects %}
+        <div class="project-card"  id="project-{{ project.id }}">
+            <img src="{{ project.album_image.url }}" alt="Обложка альбома">
+            <h2>{{ project.name }}</h2>
+            <p>Дата окончания: {{ project.end_date }}</p>
+            <p>Текущий процесс: {{ project.current_status }}</p>
+            <p>Исполнитель: {{ project.performer }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Нет доступных проектов.</p>
+    {% endif %}
+    </div>
+</div>
+</div>
+<div class="footer">
+    <p>Соц. сети: [Ссылки на соц. сети]</p>
+    <p>Контактная информация: example@studio.com</p>
+    <a href="artist_form.html"> Исполнители </a>
+    <a href="producer_form.html"> Продюсер </a>
+    <a href="client_form.html"> Клиенты </a>
+    <a href="manager_form.html"> Менеджер </a>
+    <a href="home.html"> Главная </a>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    
+function toggleProducerForm() {
+    var form = document.getElementById('producer-form');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}
+
+function toggleProducerForm2() {
+    var form = document.getElementById('filter');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}
+function applyFilter() {
+    // Здесь можно добавить логику для применения фильтров
+    alert('Фильтры применены!');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уведомления</title>
+    <style>
+        html{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', Courier, monospace,Times, serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        } 
+        h2{
+            margin-top: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            background-color: #51739b;
+        }
+        .sideMain{
+            display: flex;
+            height: 100%;
+        }
+        .sidebar{
+            height: 100%;
+            width: 20vw;
+            background-color:#C8D9E6;
+            display: grid;
+            grid-template-areas: 
+            "hight "
+            "low "
+        }
+
+        .hight{
+            grid-area: hight;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .low{
+            grid-area: low;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3em;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            font-size: 2.3vh;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .sidebar button {
+            background: none;
+            border: 1px solid #51739b ;
+            padding: 0.5rem;
+            text-align: center;
+            width: 20vw;
+            cursor: pointer;
+            font-size: 2.5vh;
+            font-family: 'Times New Roman';
+        }
+        .sidebar button:hover {
+            background: #51749b71;
+        }
+        .main {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            background-color: #F5EFEB;
+            flex-direction: column;
+            overflow-y: auto; /* Позволяет прокручивать содержимое */
+        }
+
+        .footer {
+            background-color: #51739b;
+            color: white;
+            text-align: center;
+            height: 20%;
+        }
+
+        .notification {
+            width: 80%;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .notification:hover {
+            background-color: #f1f1f1; /* Эффект при наведении */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JYP Entertainment</h1>
+        </div>
+        <div class="sideMain">
+        <div class="sidebar">
+            <div class="hight">
+                <a href="{% url 'client' %}"><button >Главная</button></a>
+                <a href="{% url 'project_users' %}"><button>Проекты</button></a>
+                <button>Альбомы</button>
+                <a href="{% url 'notifications_client' %}"><button>Уведомления</button></a>
+                <button>Настройки</button>
+            </div>
+                <div class="low">
+                <img src="https://sh94-krasnoyarsk-r04.gosweb.gosuslugi.ru/netcat_files/9/148/1663871865_44_top_fon_com_p_serii_fon_tik_tok_foto_50_16.jpg" alt="Аватар" class="avatar">
+                <p>{{ user.username }}</p>
+            </div>
+        </div>
+        <div class="main">
+            <h2>Ваши уведомления</h2>
+            <div class="notification">
+                <strong>Уведомление 1:</strong> Вы получили новое сообщение.
+                <p>Дата: 12 октября 2023</p>
+            </div>
+            <div class="notification">
+                <strong>Уведомление 2:</strong> Обновление доступно для загрузки.
+                <p>Дата: 11 октября 2023</p>
+            </div>
+            <div class="notification">
+                <strong>Уведомление 3:</strong> Ваша подписка истекает через 3 дня.
+                <p>Дата: 10 октября 2023</p>
+            </div>
+        </div>
+    </div> 
+        <div class="footer">
+            <p>Соц. сети: [Ссылки на соц. сети]</p>
+            <p>Контактная информация: example@studio.com</p>
+            &copy; 2023 Ваш сайт
+        </div>
+    </div>
+</body>
+</html>

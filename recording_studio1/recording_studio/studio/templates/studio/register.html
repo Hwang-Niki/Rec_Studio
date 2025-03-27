@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family:'Times New Roman', Times, serif;
+            height: auto;
+            background-image: url(https://news.cgtn.com/news/2021-06-11/Russian-telecom-watchdog-says-two-foreign-radio-stations-ignored-laws-110JhQvGh7G/img/5c740e9bdda94854a4b5f57c34521014/5c740e9bdda94854a4b5f57c34521014-1920.png);
+            overflow-y: auto;
+       
+        }
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:auto;
+            flex-direction: column;
+            backdrop-filter: blur(30px);    
+            padding: 2vw;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 0 10px 10px #c2cfff7e;
+            color: aliceblue;
+            margin: 3vh;
+            
+        }
+        #registerForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;      
+    }
+        button{
+            width: 25vw;
+            height: 5vh;
+            background-color: #6680d3d7;
+            border: none;
+            border-radius: 10px;   
+            margin: 2.5vh; 
+        }
+        button:hover{
+            background: linear-gradient(to right, #758cd7d7, #576eb8);
+            border: none;
+            border-radius: 10px; 
+        }
+        input{
+            height: 4vh;
+            width: 50vw;
+        }
+        select{
+            height: 4vh;
+            width: 50vw;
+        }
+        h1{
+            color: azure;
+            margin: 0;
+        }
+        a{
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+        a:hover{
+            color:#435ea0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Регистрация</h1>
+        <form method="POST" action="{% url 'register' %}" id="registerForm">
+            {% csrf_token %}
+            <div class="userType">
+                <p>Зарегистрироваться как:</p>
+                <select id="role" name="role">
+                    <option value="user">Пользователь</option>
+                    <option value="performer">Исполнитель</option>
+                    <option value="producer">Продюсер</option>
+                    <option value="manager">Менеджер</option>
+                </select>
+            </div>
+            <div class="form">
+                <div class="personal_data">
+                    <p>Логин:</p>
+                    <input type="text" id="username" name="username" placeholder="Введите логин" required>
+                    <p>Имя:</p>
+                    <input type="text" id="firstName" name="first_name" placeholder="Введите имя" required>
+                    <p>Фамилия:</p>
+                    <input type="text" id="lastName" name="last_name" placeholder="Введите фамилию" required>   
+                </div>
+                <div class="mail_password">
+                    <p>E-mail:</p>
+                    <input type="email" id="email" name="email" placeholder="Введите email" required>
+                    <p>Пароль:</p>
+                    <input type="password" id="password" name="password" placeholder="Придумайте пароль" required>
+                </div>
+            </div>
+            <button id="registerButton" type="submit">Зарегистрироваться</button>
+            <a href="{% url 'login' %}"> Уже есть аккаунт? Войти.</a>
+        </form>
+    </div>
+    
+<script>
+    document.getElementById('registerButton').addEventListener('click', function() {
+        // Получаем данные из формы
+        const role = document.getElementById('role').value;
+        const username = document.getElementById('username').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Подготовка данных для отправки
+        const data = {
+            role: role,
+            username: username,
+            lastName: lastName,
+            email: email,
+            password: password
+        };
+
+    });
+</script>
+</body>
+</html>

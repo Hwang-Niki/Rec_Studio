@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recording Studio</title>
+    <style>
+        html{
+            margin: 0;
+            padding: 0;
+        }
+        
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', Courier, monospace,Times, serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .container{
+            display: flex;
+           flex-direction: column;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .header{
+            display: flex;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            background-color: #51739b;
+            gap: 40vw;
+        }
+       
+        .sidebar{
+            position: fixed;
+            left: -20vw;
+            transition: left 0.3s;
+            height: 100%;
+            width: 20vw;
+            background-color:#C8D9E6;
+            display: grid;
+            grid-template-areas: 
+            "hight "
+            "low "
+        }
+        .sideMain{
+            display: flex;
+            height: 100%;  
+        }
+        .sidebar.active {
+            left: 0; /* Положение при активации */
+        }
+        .toggle-btn {
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            border: none;
+            background: none;
+        }
+        .hight{
+            grid-area: hight;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .low{
+            grid-area: low;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3em;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            font-size: 2.3vh;
+        }
+
+        .sidebar button {
+            background: none;
+            border: 1px solid #51739b ;
+            padding: 0.5rem;
+            text-align: center;
+            width: 20vw;
+            cursor: pointer;
+            font-size: 2.5vh;
+            font-family: 'Times New Roman';
+        }
+        .sidebar button:hover {
+            background: #51749b71;
+        }
+        h2{
+            margin-top: 0;
+        }
+        .main{
+            background-color: #F5EFEB;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            width: 100%;
+            overflow:auto;
+        }
+
+        .headMain{
+            display: flex;
+            width: 100%;
+            height: auto;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .filter {
+            margin-bottom: 20px;
+            background-color: #C8D9E6;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }  
+
+        .projects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 40%;
+            margin-bottom: 2vh;
+        }
+        .project-card img{
+            width: 100%;
+            height: 60%;
+        }
+        .project-card button{
+            background-color: #88aad0;
+            min-width: 10vw;
+            height: 5vh;
+            border: none;
+            border-radius: 0.77vw;
+        }
+
+        .project-card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+
+        .filterBut{
+            display: flex;
+            flex-direction: column;
+        }
+        .dropdown-btn {
+            padding: 10px;
+            background-color: #C8D9E6;
+            color: rgb(0, 0, 0);
+            border: 2px solid #799bc1;
+            cursor: pointer;
+            width: 8vw;
+            height: 8vh;
+        }
+        .dropdown-btn img{
+            height: 20px;
+            width: 20px;
+        }
+        .dropdown-content {
+            position: absolute;
+            background-color: white;
+            width: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            padding: 10px;
+            border: 2px solid #799bc1;
+        }
+
+        .dropdown-content label, .dropdown-content select, .dropdown-content button {        
+            display: flex;
+            margin: 5px 0;
+            width: 15vw;
+        }
+        .dropdown-content button{
+            background-color: #C8D9E6;
+            border: 2px solid #799bc1;
+            height: 4vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .add-project-btn {
+            padding: 10px;
+            background-color: #C8D9E6;
+            color: rgb(0, 0, 0);
+            border: 2px solid #799bc1;
+            cursor: pointer;
+            width: 20vw;
+            height: 8vh;
+        }
+        .producer-form {
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 50vw;
+            margin-bottom: 2vh;
+        }
+        .producer-form input, .producer-form select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .producer-form button {
+            background-color: #799bc1;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .producer-form button:hover {
+            background-color: #51739b;
+        }
+
+        .footer{
+            color: white;
+            text-align: center;
+            background-color: #51739b;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .low p{
+            margin: 0;
+            font-size: 3vh;
+        }
+        .low button{
+            width: 10vw;
+            height: 5vh;
+            border-radius: 10px;
+            background-color: rgb(156, 162, 229);
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+<div class="header">
+    <button class="toggle-btn" onclick="toggleMenu()">☰</button>
+<h1>JYP Entertainment</h1>
+</div>
+<div class="sideMain">
+    <div class="sidebar" id="sidebar">
+        <div class="hight" id="menu"></div>
+        <div class="low">
+            <img src="https://sh94-krasnoyarsk-r04.gosweb.gosuslugi.ru/netcat_files/9/148/1663871865_44_top_fon_com_p_serii_fon_tik_tok_foto_50_16.jpg" alt="Аватар" class="avatar">
+            <p id="username">{{ user.username }}</p>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="main" id="menu">
+    <div class="headMain">
+        <div class="filterBut">
+        <button class="dropdown-btn" onclick="toggleProducerForm2()"><img src="https://www.dkv33.ru/assets/img/icon/filter.png"></button>
+            <div class="filter">
+                <div class="dropdown-content" id="filter" style="display: none;">
+                    <label for="performers">Исполнители:</label>
+                    <select id="performers" name="performers" onchange="applyFilter()">
+                        <option value="">Все</option>
+                    </select>
+                    <label for="date">Дата:</label>
+                    <input type="date" id="date" name="date" onchange="applyFilter()">
+                    <button type="button" onclick="resetFilter()">Отменить фильтрацию</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="formAdd">
+        <button class="add-project-btn" onclick="toggleProducerForm()">Добавить проект</button>
+    </div>   
+            <div class="producer-form" id="producer-form" style="display: none;">
+                <h3>Создать новый проект</h3>
+                <form id="project-form" onsubmit="return addProject(event)">
+            
+                    <label for="album_image">Загрузите картинку альбома:</label>
+                    <input type="file" id="album_image" name="album_image" required>
+        
+                    <label for="name">Название проекта:</label>
+                    <input type="text" id="name" name="name" autocomplete="name"required>
+        
+                    <label for="end_date">Дата окончания:</label>
+                    <input type="date" id="end_date" name="end_date" required>
+        
+                    <label for="current_status">Текущий процесс:</label>
+                    <select id="current_status" name="current_status" required>
+                        <option value="В процессе">В процессе</option>
+                        <option value="Завершен">Завершен</option>
+                        <option value="Отменен">Отменен</option>
+                    </select>
+        
+                    <label for="performer">Исполнитель:</label>
+                    <input type="text" id="performer" name="performer" required>
+        
+                    <button type="submit"  >Добавить</button>
+                </form>
+            </div>
+           
+        </div>
+    <div class="projects-list"  id="projects-list">
+        <p>Нет доступных проектов.</p> 
+    </div>
+<script>
+const users = ['Иван', 'Мария', 'Петр']; // Список зарегистрированных исполнителей   
+projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+function toggleProducerForm() {
+    const form = document.getElementById('producer-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+function addProject(event) {
+    event.preventDefault();
+
+    const projectForm = document.getElementById('project-form');
+    const formData = new FormData(projectForm);
+    const project = {
+        id: Date.now(),  // Используем время для уникального идентификатора
+        album_image: URL.createObjectURL(formData.get('album_image')),
+        name: formData.get('name'),
+        end_date: formData.get('end_date'),
+        current_status: formData.get('current_status'),
+        performer: formData.get('performer'),
+    };
+
+    // Добавляем проект в массив
+    projects.push(project);
+    localStorage.setItem('projects', JSON.stringify(projects)); // Сохраняем в localStorage
+    displayProjects();
+    projectForm.reset();
+}
+
+function displayProjects() {
+    const projectsList = document.getElementById('projects-list');
+    projectsList.innerHTML = '';
+
+    if (projects.length === 0) {
+        projectsList.innerHTML = '<p>Нет доступных проектов.</p>';
+        return;
+    }
+
+    projects.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+        projectCard.id = `project-${project.id}`;
+        projectCard.innerHTML = `
+            <img class="" src="${project.album_image}" alt="Обложка альбома">
+            <h2>${project.name}</h2>
+            <p>Дата окончания: ${project.end_date}</p>
+            <p>Текущий процесс: ${project.current_status}</p>
+            <p>Исполнитель: ${project.performer}</p>
+            <button onclick="deleteProject(${project.id})">Удалить</button>
+        `;
+        projectsList.appendChild(projectCard);
+    });
+}
+
+function deleteProject(id) {
+    if (confirm("Вы уверены, что хотите удалить этот проект?")) {
+        projects = projects.filter(project => project.id !== id);
+        localStorage.setItem('projects', JSON.stringify(projects)); // Обновляем localStorage
+        displayProjects();
+    }
+}
+
+// Отображаем проекты при загрузке страницы
+window.onload = displayProjects;
+</script>
+</div>
+</div>
+<div class="footer">
+    <p>Соц. сети: [Ссылки на соц. сети]</p>
+    <p>Контактная информация: example@studio.com</p>
+    <a href="artist_form.html"> Исполнители </a>
+    <a href="producer_form.html"> Продюсер </a>
+    <a href="client_form.html"> Клиенты </a>
+    <a href="manager_form.html"> Менеджер </a>
+    <a href="home.html"> Главная </a>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+ document.addEventListener("DOMContentLoaded", function() {
+        const user = {
+            isAuthenticated: '{{ user.is_authenticated|lower }}',
+            role: '{{ user.role }}',
+            username: '{{ user.username }}'
+        };
+
+        const menu = document.getElementById('menu');
+
+        // Отображение кнопки "Главная" в зависимости от роли
+        if (user.isAuthenticated) {
+            let homeLink = '';
+
+            switch(user.role) {
+                case 'artist':
+                    homeLink = '{% url "artist" %}';
+                    break;
+                case 'producer':
+                    homeLink = '{% url "producer" %}';
+                    break;
+                case 'user':
+                    homeLink = '{% url "client" %}';
+                    break;
+            }
+            menu.innerHTML += `<a href="${homeLink}"><button>Главная</button></a>`;
+        } else {
+            menu.innerHTML += `<a href="{% url 'login' %}"><button>Войдите</button></a>`;
+        }
+
+        // Общие кнопки меню
+        menu.innerHTML += `
+            <a href="{% url 'projects' %}"><button>Проекты</button></a>
+            <button onclick="toggleProducerForm()">Альбомы</button>
+            <a href="{% url 'notifications' %}"><button>Уведомления</button></a>
+            <button>Настройки</button>
+        `;
+
+//         // Функция для переключения видимости формы продюсера
+//         window.toggleProducerForm = function() {
+//             var form = document.getElementById('producer-form');
+//             if (form) {
+//                 form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+//             }
+//         }
+//     })
+
+// function toggleProducerForm2() {
+//     var form = document.getElementById('filter');
+//     if (form.style.display === 'none') {
+//         form.style.display = 'block';
+//     } else {
+//         form.style.display = 'none';
+//     }
+// }
+
+// function populatePerformers() {
+//     const performerSelect = document.getElementById('performers');
+    
+//     users.forEach(user => {
+//         const option = document.createElement('option');
+//         option.value = user; // Значение, которое будет отправлено при выборе
+//         option.textContent = user; // Текст, который будет отображен
+//         performerSelect.appendChild(option); // Добавление опции в селект
+//     });
+// }
+
+
+// function applyFilter() {
+//     const selectedPerformer = document.getElementById('performers').value;
+//     const selectedDate = document.getElementById('date').value;
+
+//     const filteredProjects = projects.filter(project => 
+//         (project.performer === selectedPerformer || selectedPerformer === '') &&
+//         (project.end_date === selectedDate || selectedDate === '')
+//     );
+
+//     displayFilteredProjects(filteredProjects);
+// }
+
+// function displayFilteredProjects(filteredProjects) {
+//     const projectsList = document.getElementById('projects-list');
+//     projectsList.innerHTML = '';
+
+//     if (filteredProjects.length === 0) {
+//         projectsList.innerHTML = '<p>Нет доступных проектов.</p>';
+//         return;
+//     }
+
+//     filteredProjects.forEach(project => {
+//         const projectCard = document.createElement('div');
+//         projectCard.className = 'project-card';
+//         projectCard.innerHTML = `
+//             <img src="${project.album_image}" alt="${project.name}"/>
+//             <h2>${project.name}</h2>
+//             <p>Исполнитель: ${project.performer}</p>
+//             <p>Дата окончания: ${project.end_date}</p>
+//             <p>Статус: ${project.current_status}</p>
+//             <button onclick="deleteProject(${project.id})">Удалить</button>`;
+//         projectsList.appendChild(projectCard);
+//     });
+// }
+
+// function resetFilter() {
+//     document.getElementById('performers').value = '';
+//     document.getElementById('date').value = '';
+//     displayProjects(); // Отображает все проекты
+// }
+
+// // Инициализация
+// populatePerformers();
+// displayProjects();
+
+function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main');
+            sidebar.classList.toggle('active');
+            if (sidebar.classList.contains('active')) {
+                main.style.marginLeft = '0';
+            } else {
+                main.style.marginLeft = '0';
+            }
+        }
+</script>
+</body>
+</html>
